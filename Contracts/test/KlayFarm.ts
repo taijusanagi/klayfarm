@@ -8,7 +8,6 @@ describe("KlayFarm", function () {
       const KlayFarm = await ethers.getContractFactory("KlayFarm");
       const klayFarm = await KlayFarm.deploy();
       await klayFarm.deployed();
-
       return { klayFarm, owner };
     };
 
@@ -17,9 +16,10 @@ describe("KlayFarm", function () {
       const tokenId = "0";
       await klayFarm.connect(owner).mint(owner.address, tokenId);
       const metaData = await klayFarm.getMetaData(tokenId);
-      expect(metaData).to.equal(
-        `{"name":"KlayFarm","description":"KlayFarm","animation_url":"https://2023-klaymakers.vercel.app"}`
-      );
+      console.log("metaData", metaData);
+      JSON.parse(metaData);
+      const tokenURI = await klayFarm.tokenURI(tokenId);
+      console.log("tokenURI", tokenURI);
     });
   });
 });

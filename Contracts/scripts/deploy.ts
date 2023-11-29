@@ -1,23 +1,24 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
-
-  const lockedAmount = ethers.utils.parseEther("0.001");
-
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
-
-  await lock.deployed();
-
-  console.log(
-    `Lock with ${ethers.utils.formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
+  const KlayFarm = await ethers.getContractFactory("KlayFarm");
+  const klayFarm = await KlayFarm.deploy();
+  await klayFarm.deployed();
+  console.log(`klayFarm deployed to ${klayFarm.address}`);
+  if (!process.env.SKIP_MINT) {
+    const [owner] = await ethers.getSigners();
+    const tokenMintTx1 = await klayFarm.mint(owner.address, "0");
+    await tokenMintTx1.wait();
+    console.log("minted token 0");
+    const tokenMintTx2 = await klayFarm.mint(owner.address, "1");
+    await tokenMintTx2.wait();
+    console.log("minted token 1");
+    const tokenMintTx3 = await klayFarm.mint(owner.address, "2");
+    await tokenMintTx3.wait();
+    console.log("minted token 2");
+  }
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;

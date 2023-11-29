@@ -3,6 +3,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Base64.sol";
 
 contract KlayFarm is ERC721, Ownable {
     constructor() ERC721("KlayFarm", "KF") {}
@@ -15,7 +16,8 @@ contract KlayFarm is ERC721, Ownable {
         require(_exists(_tokenId), "query for nonexistent token");
 
         string memory name = "KlayFarm";
-        string memory description = "KlayFarm";
+        string memory description = "This is KlayFarm";
+        string memory image = "https://placehold.jp/500x500.png";
         string memory animationURL = "https://2023-klaymakers.vercel.app";
 
         return
@@ -25,6 +27,8 @@ contract KlayFarm is ERC721, Ownable {
                     name,
                     '","description":"',
                     description,
+                    '","image":"',
+                    image,
                     '","animation_url":"',
                     animationURL,
                     '"}'
@@ -38,6 +42,13 @@ contract KlayFarm is ERC721, Ownable {
         override 
         returns (string memory)
     {
-        return getMetaData(tokenId);
+        return string(
+            abi.encodePacked(
+                'data:application/json;base64,',
+                Base64.encode(
+                    bytes(getMetaData(tokenId))
+                )
+            )
+        );
     }
 }
