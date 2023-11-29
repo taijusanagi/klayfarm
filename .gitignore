@@ -76,3 +76,4 @@ node_modules
 
 # Local
 .DS_Store
+.temp
