@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
   res.sendFile("index.html", { root: path.join(__dirname, "public") });
 });
 
-app.get("/api/items", async (req, res) => {
+app.get("/items", async (req, res) => {
   const { id } = req.query;
   const items = await contract.getAllItems(id);
   res.send(items);
