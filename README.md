@@ -6,7 +6,7 @@ New Interactive On-Chain Game Distribution with Klaytn NFT.
 
 ## Demo Video
 
-TBD
+https://youtu.be/zs7R-ADUkMo
 
 ## Live APP (Viewer)
 
@@ -20,11 +20,7 @@ https://2023-klaymakers.vercel.app/api/items?id=26261747886964506387964269904227
 
 ![how-it-works](./Docs/how-it-works.png)
 
-- **NFT Deployment:** NFTs are deployed on the Klaytn testnet.
-- **Animation URL:** Each NFT's `animation_url` points to the Unity WebGL game URL, appended with the token ID.
-- **Data Fetching:** The Unity WebGL game retrieves on-chain data using the token ID.
-- **3D Visualization:** The game renders a 3D model of the farm based on the retrieved data.
-- **On-Chain Transactions:** Users can create plant/harvest transactions on-chain. These transactions result in real-time updates in the game, reflecting changes in the contract state.
+KlayFarm is a technical showcase combining Unity WebGL for 3D gaming with Klaytn blockchain's on-chain capabilities. It employs NFTs, deployed on the Klaytn testnet, to represent individual game elements. Each NFT's animation_url integrates with Unity WebGL, allowing the game to fetch and render real-time on-chain data using the NFT's token ID in OpenSea.
 
 ## Benefits
 
