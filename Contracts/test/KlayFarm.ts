@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { ethers, network } from "hardhat";
 
 async function increaseTime(duration: number) {

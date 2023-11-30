@@ -17,7 +17,7 @@ contract KlayFarm is ERC721 {
 
     // Those are currently hardcoded, this should be managed by admin
     uint256 public constant MAX_FARM = 9;
-    uint256 public constant HARVEST_INTERVAL = 5 minutes;
+    uint256 public constant HARVEST_INTERVAL = 1 minutes;
     string public constant PLANT_NAME = "Tomato";
 
     mapping (uint256 => mapping(uint => Item)) public items;
