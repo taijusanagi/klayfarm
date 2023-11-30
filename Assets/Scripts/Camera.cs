@@ -8,7 +8,8 @@ public class Camera : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        // this is commented out for OpenSea integration
+        // Cursor.lockState = CursorLockMode.Locked; 
     }
 
     void Update()
