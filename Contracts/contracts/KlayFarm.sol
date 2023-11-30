@@ -18,7 +18,7 @@ contract KlayFarm is ERC721, Ownable {
         string memory name = "KlayFarm";
         string memory description = "This is KlayFarm";
         string memory image = "https://placehold.jp/500x500.png";
-        string memory animationURL = "https://2023-klaymakers.vercel.app";
+        string memory animationURL = "https://2023-klaymakers.vercel.app?id=0";
 
         return
             string(
