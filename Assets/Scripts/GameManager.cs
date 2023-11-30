@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 
 public class GameManager : MonoBehaviour
 {
-
     public float interval = 5f;
     private string apiBaseUrl = "https://2023-klaymakers.vercel.app/api/items?id=";
 
@@ -38,9 +37,7 @@ public class GameManager : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(id))
         {
-            Debug.Log("Fetching items for id: " + id);
             StartCoroutine(GetDataFromAPI());
-
         }
         else
         {
@@ -51,6 +48,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator GetDataFromAPI()
     {
+        Debug.Log("Fetching data from " + apiBaseUrl + id);
         using (UnityWebRequest webRequest = UnityWebRequest.Get(apiBaseUrl + id))
         {
             // Send the request and wait for the response
@@ -69,25 +67,20 @@ public class GameManager : MonoBehaviour
 
     private void ProcessResponse(string jsonResponse)
     {
-        Debug.Log("Response: " + jsonResponse);
-        // try
-        // {
-        //     // Deserialize JSON to dynamic object
-        //     dynamic items = JsonConvert.DeserializeObject(jsonResponse);
+        Debug.Log("jsonResponse:" + jsonResponse);        // Deserialize JSON
+        ItemList itemList = JsonUtility.FromJson<ItemList>(jsonResponse);
+        // Loop through the array
+        foreach (var itemArray in itemList.items)
+        {
+            foreach (var item in itemArray)
+            {
+                Debug.Log("item.name: " + item.name);
 
-        //     // Loop through the array
-        //     foreach (var item in items)
-        //     {
-        //         string itemName = item[0];
-        //         if (itemName == "Tomato")
-        //         {
-        //             Debug.Log("do");
-        //         }
-        //     }
-        // }
-        // catch (System.Exception e)
-        // {
-        //     Debug.LogError("Error processing JSON: " + e.Message);
-        // }
+                if (item != null && item.name == "Tomato")
+                {
+                    Debug.Log("do");
+                }
+            }
+        }
     }
 }

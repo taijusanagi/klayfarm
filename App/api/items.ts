@@ -28,7 +28,15 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
   const { id } = req.query;
   console.log(id);
   const items = await contract.getAllItems(id);
-  res.status(200).json(items);
+  res.status(200).json({
+    items: items.map((item) => {
+      console.log(item);
+      return {
+        name: item.name,
+        plantedAt: item.plantedAt.toString(),
+      };
+    }),
+  });
 };
 
 export default allowCors(handler);
