@@ -11,7 +11,9 @@ app.use(express.static(path.join(process.cwd(), "/")));
 // });
 
 app.get("/", (req, res) => {
-  res.sendFile("index.html");
+  console.log("__dirname");
+  console.log(__dirname);
+  res.sendFile("index.html", { root: __dirname });
 });
 
 app.listen(port, () => {
