@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 
 
-
 [System.Serializable]
 public class Item
 {
@@ -12,5 +11,5 @@ public class Item
 [System.Serializable]
 public class ItemList
 {
-    public List<Item[]> items;
+    public Item[] items;
 }

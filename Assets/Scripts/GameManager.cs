@@ -1,16 +1,24 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 // using Newtonsoft.Json; 
 
 public class GameManager : MonoBehaviour
 {
-    public float interval = 5f;
-    private string apiBaseUrl = "https://2023-klaymakers.vercel.app/api/items?id=";
-
     private string id;
+    private string apiBaseUrl = "https://2023-klaymakers.vercel.app/api/items?id=";
+    private List<GameObject> instantiatedObjects = new List<GameObject>(new GameObject[9]);
+    
+    public float interval = 5f;
+
+    public GameObject plantPrefab;
+
+
+
     void Start()
     {
+        StartCoroutine(GetDataFromAPI());
         int pm = Application.absoluteURL.IndexOf("?");
         if (pm != -1)
         {
@@ -69,16 +77,20 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("jsonResponse:" + jsonResponse);        // Deserialize JSON
         ItemList itemList = JsonUtility.FromJson<ItemList>(jsonResponse);
-        // Loop through the array
-        foreach (var itemArray in itemList.items)
+        for (int i = 0; i < itemList.items.Length; i++)
         {
-            foreach (var item in itemArray)
-            {
-                Debug.Log("item.name: " + item.name);
-
-                if (item != null && item.name == "Tomato")
-                {
-                    Debug.Log("do");
+            GameObject current = instantiatedObjects[i];
+            Item item = itemList.items[i];
+            string name = item.name;
+            Vector3 startPosition = new Vector3(-1, 0, 11);
+            if(!string.IsNullOrEmpty(name)) {
+                if(current == null) {
+                    instantiatedObjects[i] = Instantiate(plantPrefab, startPosition + new Vector3(i % 3, 0, -(i / 3)), Quaternion.identity);
+                }
+            } else {
+                if(current != null) {
+                    Destroy(current);
+                    instantiatedObjects[i] = null; 
                 }
             }
         }
