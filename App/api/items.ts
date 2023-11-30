@@ -7,9 +7,28 @@ const rpc = "https://public-en-baobab.klaytn.net";
 const provider = new ethers.providers.JsonRpcProvider(rpc);
 const contract = new ethers.Contract(address, abi, provider);
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+const allowCors = (fn) => async (req, res) => {
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // another common pattern
+  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS,PATCH,DELETE,POST,PUT");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+  return await fn(req, res);
+};
+
+const handler = async (req: VercelRequest, res: VercelResponse) => {
   const { id } = req.query;
   console.log(id);
   const items = await contract.getAllItems(id);
   res.status(200).json(items);
-}
+};
+
+export default allowCors(handler);
