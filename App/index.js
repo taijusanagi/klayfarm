@@ -6,8 +6,12 @@ const port = 8080;
 
 app.use(express.static(path.join(process.cwd(), "/")));
 
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(process.cwd(), +"/index.html"));
+// });
+
 app.get("/", (req, res) => {
-  res.sendFile(path.join(process.cwd(), +"/index.html"));
+  res.sendFile("index.html");
 });
 
 app.listen(port, () => {
