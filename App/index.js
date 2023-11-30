@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
 
-// const path = require("path");
-const port = 3000;
+const path = require("path");
+const port = 8080;
 
-// app.use(express.static(path.join(__dirname, "/")));
+app.use(express.static(path.join(process.cwd(), "/")));
 
 app.get("/", (req, res) => {
-  res.send("Express on Vercel");
+  res.sendFile(path.join(process.cwd(), +"/index.html"));
 });
 
 app.listen(port, () => {
